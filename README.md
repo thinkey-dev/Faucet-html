@@ -2,7 +2,7 @@
 
 > A Vue.js project
 
-## Build Setup
+## Faucet-html
 
 ``` bash
 # install dependencies
