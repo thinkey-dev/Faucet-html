@@ -1,8 +1,8 @@
-# demo
+# Faucet-html
 
 > A Vue.js project
 
-## Faucet-html
+## Build Setup
 
 ``` bash
 # install dependencies
