@@ -11,14 +11,9 @@ service.interceptors.response.use(
   response => {
     const res = response.data
     return res
-    // if (response.eCode === undefined ) {
-    //   return response.data
-    // } else {
-    //   return Promise.reject('error')
-    // }
   },
   error => {
-    console.log('err' + error) // for debug
+    console.log('err' + error)
     let msg = ''
     if (error == 'Error: timeout of 200000ms exceeded') {
       msg = '无效请求！请求超时！'

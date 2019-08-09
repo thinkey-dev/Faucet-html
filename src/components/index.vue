@@ -10,8 +10,8 @@
         {{language}}<i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item @click.native="aa('zh')">中文</el-dropdown-item>
-            <el-dropdown-item @click.native="aa('en')">English</el-dropdown-item>
+            <el-dropdown-item @click.native="switch_language('zh')">中文</el-dropdown-item>
+            <el-dropdown-item @click.native="switch_language('en')">English</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -24,7 +24,7 @@
         <div class="con_input">
           <el-input v-model="address" style="width: 60%;margin-right: 2%;height: 60px"
                     :placeholder="$t('tishi')"></el-input>
-          <el-select v-model="value" :placeholder="$t('tishi1')" style="width: 13%" @change="select_change()">
+          <el-select v-model="value" :placeholder="$t('tishi1')" style="width: 13%" @change="choose_token()">
             <el-option
               v-for="item in options"
               :key="item.value"
@@ -34,7 +34,7 @@
           </el-select>
         </div>
         <div class="con_sure">
-          <el-button type="primary" @click="sure_send()">{{ $t('get_test_tokens')}}</el-button>
+          <el-button type="primary" @click="get_tokens()">{{ $t('get_test_tokens')}}</el-button>
         </div>
         <div class="description">
           <span class="de_text">
@@ -71,13 +71,14 @@
         value: '',
         address: ''
       }
-    }, methods: {
+    },
+    methods: {
       /*选择后的代币种类*/
-      select_change() {
+      choose_token() {
         console.log(this.value)
       },
-      /*获取所有代币种类*/
-      getdata() {
+      /*初始化数据*/
+      initialization_data() {
         getalltokeninfo().then(response => {
           this.value = "THK"
           this.options.push({"lable": 0, "value": 'THK'})
@@ -87,9 +88,7 @@
         })
       },
       /*确认获取代币*/
-      sure_send() {
-        console.log(this.address)
-        console.log(this.value)
+      get_tokens() {
         if (this.address == '' || this.address == undefined) {
           this.$message({
             showClose: true,
@@ -131,7 +130,7 @@
           })
         }
       },
-      aa(e) {
+      switch_language(e) {
         this.$i18n.locale = e
         console.log(this.$i18n.locale)
         this.$store.dispatch('app/setLanguage', e)
@@ -143,15 +142,17 @@
           this.language = '中文'
         }
       },
-    }, created() {
-      this.getdata()
+    },
+    created() {
+      this.initialization_data()
       this.language_is()
     },
     computed: {
       language_change() {
         return this.$i18n.locale;
       }
-    }, watch: {
+    },
+    watch: {
       language_change(e) {
         this.language_is()
       }
@@ -159,7 +160,7 @@
   }
 </script>
 <style>
-  .el-input__inner{
+  .el-input__inner {
     height: 60px;
   }
 </style>
